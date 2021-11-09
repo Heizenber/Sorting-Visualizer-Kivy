@@ -33,6 +33,7 @@ class SortVisualizer(BoxLayout):
         super().__init__(**kwargs)
         self.visualizer = self.ids.visualize_canvas
         self.display_rectangles()
+        self.bind(size=self.update)
 
     def display_rectangles(self):
         self.generate(int(self.ids.slider.value), self.visualizer)
@@ -79,6 +80,9 @@ class SortVisualizer(BoxLayout):
                 size_y = height * canvas_height
                 size_x = rect_width
                 Rectangle(pos=(pos_x, pos_y), size=(size_x, size_y))
+                
+    def update(self, *args):
+        self.draw(self.rectangles, [RED for i in range(len(self.rectangles))])
 
 
 class Visualizer(Widget):
