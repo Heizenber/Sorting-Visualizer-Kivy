@@ -1,5 +1,6 @@
 import time
 from colors import *
+from kivy.clock import Clock
 
 
 def bubble_sort(array, visualizer, speed):

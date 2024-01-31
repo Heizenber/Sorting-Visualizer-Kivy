@@ -55,41 +55,39 @@ class SortVisualizer(BoxLayout):
         self.activeSorting = False
 
     def on_resize(self):
-        self.draw(self.rectangles, [RED for i in range(len(self.rectangles))])
+        Clock.schedule_once(self.update)
 
     def set_speed(self):
         return speed[self.ids.speed.text]
 
     def generate(self, instance, value):
         self.rectangles = [random.randint(5, 400) for i in range(value)]
-        assert len(self.rectangles) == value
-        self.draw(self.rectangles, [RED] * len(self.rectangles))
+        # Clock.schedule_once(lambda dt: self.update)
+        self.update()
+        # self.draw(self.rectangles, [RED] * len(self.rectangles))
 
     def sort(self):
         speed = self.set_speed()
         self.activeSorting = True
 
-        # self.sorting = Thread(
-        #     target=algorithms[self.ids.algorithm.text],
-        #     args=(self.rectangles, self, speed),
-        #     daemon=True,
-        # ).start()
+        
         def sorting_algorithm():
             # Run the sorting algorithm
             algorithms[self.ids.algorithm.text](self.rectangles, self, speed)
 
-            # # Schedule a UI update on the main thread
-            # Clock.schedule_once(lambda dt: self.draw(self.rectangles, self.colorArray))
 
+        
         # Start the sorting algorithm on a separate thread
         self.sorting = Thread(target=sorting_algorithm, daemon=True)
         self.sorting.start()
 
-
-
-
-
     def draw(self, rects, colorArray):
+        Clock.schedule_once(lambda dt: self._draw(rects, colorArray))
+
+
+
+    def _draw(self, rects, colorArray):
+        # Clock.schedule_once(lambda dt: self.visualizer.canvas.clear())
         self.visualizer.canvas.clear()
         width, height = Window.size
         rect_width = width / (len(rects) + 1)
@@ -110,7 +108,8 @@ class SortVisualizer(BoxLayout):
     
 
     def update(self, *args):
-        self.draw(self.rectangles, [RED for i in range(len(self.rectangles))])
+        Clock.schedule_once(lambda dt: self.draw(self.rectangles, [RED for i in range(len(self.rectangles))]))
+        # self.draw(self.rectangles, [RED for i in range(len(self.rectangles))])
 
 
 class Visualizer(Widget):
