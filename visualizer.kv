@@ -1,0 +1,53 @@
+<Label>
+    font_size: '18dp'
+
+<SortVisualizer>:
+    orientation: 'vertical'
+
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint: 1, 0.1
+
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint: 1.8, 1
+
+            Label:
+                font_size: 14
+                text: 'Number of rectangles: ' + str(int(slider.value))
+
+            Slider:
+                id: slider
+                min: 100
+                max: 300
+                value: 200
+                step: 1
+                orientation: 'horizontal'
+
+        Button:
+            text: '   Display \nRectangles'
+            on_press: root.display_rectangles()
+
+        Spinner:
+            id: algorithm
+            text: 'Bubble Sort'
+            values: 'Bubble Sort', 'Selection Sort', 'Quick Sort', 'Merge Sort', 'Insertion Sort'
+
+        Spinner:
+            id: speed
+            text: 'Medium'
+            values: 'Medium', 'Slow', 'Fast'
+
+        Button:
+            text: 'Start'
+            on_press: root.sort()
+
+        Button:
+            text: 'Stop'
+            on_press: root.set_active()
+
+    Visualizer:
+        id: visualize_canvas
+
+
+
