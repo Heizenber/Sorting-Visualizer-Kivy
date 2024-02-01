@@ -39,7 +39,6 @@ class SortVisualizer(BoxLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.visualizer = self.ids.visualize_canvas
-        # self.rectangles = []
         self.generate(self.ids.slider, int(self.ids.slider.value))
         Clock.schedule_once(self.bind_slider_value)
 
@@ -78,7 +77,6 @@ class SortVisualizer(BoxLayout):
         Clock.schedule_once(lambda dt: self._draw(rects, colorArray))
 
     def _draw(self, rects, colorArray):
-        # Clock.schedule_once(lambda dt: self.visualizer.canvas.clear())
         self.visualizer.canvas.clear()
         width, height = Window.size
         rect_width = width / (len(rects) + 1)
@@ -105,13 +103,6 @@ class SortVisualizer(BoxLayout):
 class Visualizer(Widget):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        # self.bind(size=self.on_size)
-
-    # def on_size(self, *args):
-    #     Thread(target=self.update, daemon=True).start()
-
-    # def update(self, *args):
-    #     self.canvas.clear()
 
 
 class VisualizeSortApp(App):
